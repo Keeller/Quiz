@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+
+        function onC(t,e) {
+            e.stopPropagation();
+            if(t===0){
+
+                document.getElementById("item1").hidden=!document.getElementById("item1").hidden;
+                document.getElementById("item2").hidden=!document.getElementById("item2").hidden;
+
+
+            }else if(t===1){
+
+                if(document.getElementById("item1").innerHTML!== 'Фильмы с кадрами'){
+
+                    document.getElementById("item1").innerHTML='Фильмы с кадрами';
+                }else {
+                    parsData("http://resumetest/NET/t3","item1");
+                    document.getElementById("item1").hidden=false;
+                }
+            }else if(t===2){
+                if(document.getElementById("item2").innerHTML!== 'Фильмы без кадров'){
+                    document.getElementById("item2").innerHTML='Фильмы без кадров';
+                }else {
+                    parsData("http://resumetest/NET/t1","item2");
+                    document.getElementById("item2").hidden=false;
+                }
+            }
+        }
+
+        function parsData(url,name) {
+            getData(url).then((data)=> {
+
+                    let render = data.reduce((s, v) => {
+
+                        return s + "<li>" + v.title + "</li>"
+                    },"");
+                    document.getElementById(name).innerHTML += ("<ul> "+ render+" </ul>");
+                }
+            ).catch(err=>console.log(err));
+
+        }
+
+        function getData(url) {
+          return (async ()=>{
+                let req=await fetch(url);
+                return req.json();
+            })();
+        }
+
+    </script>
+</head>
+<body>
+<ul>
+    <li onclick="onC(0,event)">Фильмы<ul ><li hidden="true" id="item1"  onclick="onC(1,event)" >Фильмы с кадрами</li><li id="item2" hidden="true"  onclick="onC(2,event)">Фильмы без кадров</li></ul></li>
+</ul>
+</body>
+</html>

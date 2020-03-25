@@ -1,0 +1,15 @@
+{
+    "name": "kolya/resume-test",
+    "require": {
+        "ext-mysqli": "*",
+        "ext-json": "*",
+        "ext-curl": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "DB\\":"DB",
+            "NET\\":"NET"
+
+        }
+    }
+}
